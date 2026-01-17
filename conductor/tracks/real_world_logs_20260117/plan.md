@@ -38,7 +38,7 @@
     - [ ] Ensure the parsed BGL data flows correctly into the existing `Embedder` and `Trainer`.
     - [ ] run pylint.
 
-- [ ] Task: Final Pipeline Verification
+- [~] Task: Final Pipeline Verification
     - [ ] Run the full pipeline with `uv run python main.py`.
     - [ ] Verify that embeddings are generated for real logs and models are trained.
     - [ ] Verify the PDF report is generated with new metrics.
