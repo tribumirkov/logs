@@ -7,6 +7,7 @@ import os
 from src.config import load_config
 from src.generator import LogGenerator
 from src.embedder import Embedder
+from src.trainer import Trainer
 
 
 def run_data_generation(config: dict) -> str:
@@ -34,13 +35,16 @@ def run_data_generation(config: dict) -> str:
     return output_path
 
 
-def run_embedding_generation(config: dict, input_path: str):
+def run_embedding_generation(config: dict, input_path: str) -> str:
     """
     Convert logs to embeddings and update the data file.
 
     Args:
         config (dict): The configuration dictionary.
         input_path (str): The path to the generated logs JSON.
+
+    Returns:
+        str: The path to the JSON file with embeddings.
     """
     print("Starting embedding generation...")
     with open(input_path, 'r', encoding='utf-8') as f:
@@ -58,7 +62,38 @@ def run_embedding_generation(config: dict, input_path: str):
         json.dump(dataset, f, indent=2)
 
     print(f"Added embeddings to {len(dataset)} samples and saved to {output_path}")
+    return output_path
 
+def run_training(config: dict, data_path: str) -> dict:
+    """
+    Train models and evaluate performance.
+
+    Args:
+        config (dict): The configuration dictionary.
+        data_path (str): The path to the JSON file with embeddings.
+
+    Returns:
+        dict: Evaluation results.
+    """
+    print("Starting model training...")
+    with open(data_path, 'r', encoding='utf-8') as f:
+        dataset = json.load(f)
+
+    trainer = Trainer(dataset)
+    if 'logistic_regression' in config['classifiers']:
+        trainer.train_logistic_regression()
+    if 'svm' in config['classifiers']:
+        trainer.train_svm()
+
+    results = trainer.evaluate()
+    for name, metrics in results.items():
+        print(f"\nResults for {name}:")
+        print(f"  Accuracy:  {metrics['accuracy']:.4f}")
+        print(f"  Precision: {metrics['precision']:.4f}")
+        print(f"  Recall:    {metrics['recall']:.4f}")
+        print(f"  F1-Score:  {metrics['f1_score']:.4f}")
+
+    return results
 
 def main():
     """
@@ -71,7 +106,8 @@ def main():
 
     config = load_config(config_path)
     logs_path = run_data_generation(config)
-    run_embedding_generation(config, logs_path)
+    embedded_data_path = run_embedding_generation(config, logs_path)
+    run_training(config, embedded_data_path)
 
 
 if __name__ == "__main__":
