@@ -51,7 +51,7 @@
     - [ ] Update `src/generator.py` to use templates with random IPs, PIDs, and Timestamps.
     - [ ] run pylint.
 
-- [~] Task: Implement Evaluation Metrics
+- [x] Task: Implement Evaluation Metrics b06ccb0
     - [ ] Add metric calculation (Accuracy, Precision, Recall, F1).
     - [ ] Generate confusion matrices and ROC curve data.
     - [ ] run pylint.
