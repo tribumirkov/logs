@@ -5,34 +5,8 @@ Main entry point for the sysadmin log classifier POC.
 import json
 import os
 from src.config import load_config
-from src.generator import LogGenerator
 from src.embedder import Embedder
 from src.trainer import Trainer
-
-
-def run_data_generation(config: dict) -> str:
-    """
-    Generate synthetic log data based on the configuration.
-
-    Args:
-        config (dict): The configuration dictionary.
-
-    Returns:
-        str: The path to the generated JSON file.
-    """
-    print("Starting data generation...")
-    data_cfg = config['data']
-    gen = LogGenerator(seed=data_cfg['random_seed'])
-    dataset = gen.generate_dataset(data_cfg['num_samples'])
-
-    output_path = data_cfg['output_path']
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(dataset, f, indent=2)
-
-    print(f"Generated {len(dataset)} samples and saved to {output_path}")
-    return output_path
 
 
 def run_embedding_generation(config: dict, input_path: str) -> str:
@@ -105,9 +79,10 @@ def main():
         return
 
     config = load_config(config_path)
-    logs_path = run_data_generation(config)
-    embedded_data_path = run_embedding_generation(config, logs_path)
-    run_training(config, embedded_data_path)
+    # data_path = run_data_generation(config) # Synthetic data removed
+    # embedded_data_path = run_embedding_generation(config, data_path)
+    # embedded_data_path = config['data']['data_with_embeddings_path']
+    # run_training(config, embedded_data_path)
 
 
 if __name__ == "__main__":
