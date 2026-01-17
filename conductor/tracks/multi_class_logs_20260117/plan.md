@@ -12,7 +12,7 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Data Loader & Configuration Updates' (Protocol in workflow.md)
 
-## Phase 2: Multi-Class Trainer Implementation
+## Phase 2: Multi-Class Trainer Implementation [checkpoint: 6011eb9]
 
 - [x] Task: Implement Label Encoding 0da8184
     - [ ] Update `src/trainer.py` to use `scikit-learn.preprocessing.LabelEncoder`.
