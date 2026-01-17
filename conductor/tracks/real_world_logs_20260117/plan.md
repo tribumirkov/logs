@@ -15,7 +15,7 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Cleanup & Configuration' (Protocol in workflow.md)
 
-## Phase 2: Data Retrieval & Parsing
+## Phase 2: Data Retrieval & Parsing [checkpoint: 3524207]
 
 - [x] Task: Implement Dataset Downloader a1b4e08
     - [ ] Create `src/downloader.py`.
