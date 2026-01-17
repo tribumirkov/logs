@@ -23,9 +23,11 @@ def parse_bgl_line(line: str) -> dict:
     if len(parts) < 10:
         return None
 
-    # Label is the first field. '-' means non-alert (0), others are alerts (1).
+    # Label is the first field.
+    # '-' means non-alert, which we map to 'NORMAL'.
+    # Otherwise, we use the label string as-is (e.g., 'APPREAD', 'FATAL').
     label_str = parts[0]
-    label = 0 if label_str == "-" else 1
+    label = "NORMAL" if label_str == "-" else label_str
 
     # Content starts from the 10th field (index 9)
     # We join back the remaining parts as they were split by whitespace
