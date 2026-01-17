@@ -42,7 +42,7 @@
 
 ## Phase 4: Classifier Training & Evaluation
 
-- [ ] Task: Implement Model Trainer
+- [x] Task: Implement Model Trainer d5cad1d
     - [ ] Create `src/trainer.py`.
     - [ ] Implement data loading and train/test split.
     - [ ] Implement `train_logistic_regression` and `train_svm`.
