@@ -22,7 +22,7 @@
     - [ ] Implement logic to download BGL dataset if `data/BGL.log` is missing.
     - [ ] run pylint.
 
-- [ ] Task: Implement BGL Log Parser
+- [x] Task: Implement BGL Log Parser b89afc8
     - [ ] Create `src/data_loader.py`.
     - [ ] Implement parsing for BGL format.
     - [ ] Implement label mapping ( '-' to 0, others to 1).
