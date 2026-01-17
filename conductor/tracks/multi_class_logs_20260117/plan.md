@@ -18,7 +18,7 @@
     - [ ] Update `src/trainer.py` to use `scikit-learn.preprocessing.LabelEncoder`.
     - [ ] Store the encoder to allow mapping indices back to category names for reporting.
 
-- [ ] Task: Update Classifiers for Multi-Class
+- [x] Task: Update Classifiers for Multi-Class e3eff73
     - [ ] Ensure `LogisticRegression` and `SVC` are configured for multi-class (default behavior in sklearn usually handles this, but verify `multi_class='multinomial'` or similar).
     - [ ] Update evaluation logic to calculate Macro-Averaged and Per-Class metrics.
     - [ ] run pylint.
