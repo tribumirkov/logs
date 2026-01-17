@@ -14,7 +14,7 @@
 
 ## Phase 2: Multi-Class Trainer Implementation
 
-- [ ] Task: Implement Label Encoding
+- [x] Task: Implement Label Encoding 0da8184
     - [ ] Update `src/trainer.py` to use `scikit-learn.preprocessing.LabelEncoder`.
     - [ ] Store the encoder to allow mapping indices back to category names for reporting.
 
