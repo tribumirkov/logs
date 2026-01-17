@@ -6,11 +6,12 @@ with associated importance labels (1 for important, 0 for not important).
 """
 
 import random
+import time
 
 
 class LogGenerator:
     """
-    Generates synthetic sysadmin logs.
+    Generates synthetic sysadmin logs with dynamic content.
     """
 
     def __init__(self, seed: int = None):
@@ -23,36 +24,63 @@ class LogGenerator:
         if seed is not None:
             random.seed(seed)
 
-        self.auth_logs = [
-            ("Accepted password for root from 192.168.1.10 port 54321 ssh2", 0),
-            ("Failed password for root from 203.0.113.45 port 12345 ssh2", 1),
-            ("pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0", 1),
-            ("Connection closed by authenticating user root 192.168.1.10 [preauth]", 0),
-            ("Invalid user admin from 10.0.0.5 port 56789", 1),
-        ]
+    def _random_ip(self) -> str:
+        """Generate a random IPv4 address."""
+        return ".".join(str(random.randint(0, 255)) for _ in range(4))
 
-        self.system_logs = [
-            ("systemd[1]: Starting Periodic Command Scheduler...", 0),
-            ("systemd[1]: Started Periodic Command Scheduler.", 0),
-            ("systemd[1]: kernel-core.service: Main process exited, code=exited, "
-             "status=1/FAILURE", 1),
-            ("CRON[1234]: (root) CMD ( /usr/bin/find /tmp -mtime +7 -delete)", 0),
-            ("kernel: [123.456] EXT4-fs error (device sda1): ext4_lookup:1594: inode #2", 1),
-        ]
+    def _random_port(self) -> int:
+        """Generate a random port number."""
+        return random.randint(1024, 65535)
 
-        self.network_logs = [
-            ("iptables: IN=eth0 OUT= MAC=... SRC=192.168.1.1 DST=192.168.1.255 "
-             "PROTO=UDP SPT=123 DPT=123", 0),
-            ("iptables: BLOCK: SRC=45.33.22.11 DST=192.168.1.100 PROTO=TCP SPT=443 "
-             "DPT=54321", 1),
-            ("firewalld[567]: [ALERT] Possible DDoS attack detected from 185.12.34.56", 1),
-            ("NetworkManager[456]: <info> [1612345678.901] connectivity: check: SUCCESS", 0),
-            ("avahi-daemon[234]: Withdrawing address record for 192.168.1.10 on eth0.", 0),
-        ]
+    def _random_pid(self) -> int:
+        """Generate a random process ID."""
+        return random.randint(1, 32768)
 
-        all_logs = self.auth_logs + self.system_logs + self.network_logs
-        self.important_logs = [log for log in all_logs if log[1] == 1]
-        self.not_important_logs = [log for log in all_logs if log[1] == 0]
+    def _random_timestamp(self) -> str:
+        """Generate a random timestamp string."""
+        # Simple random time within the last 24 hours
+        now = time.time()
+        past = now - random.randint(0, 86400)
+        return time.strftime("%b %d %H:%M:%S", time.localtime(past))
+
+    def _generate_important_log(self) -> str:
+        """Generate a single important log (Label 1)."""
+        templates = [
+            lambda: f"Failed password for root from {self._random_ip()} "
+                    f"port {self._random_port()} ssh2",
+            lambda: f"pam_unix(sshd:auth): authentication failure; logname= "
+                    f"uid=0 euid=0 tty=ssh ruser= rhost={self._random_ip()}",
+            lambda: f"Invalid user admin from {self._random_ip()} port {self._random_port()}",
+            lambda: f"systemd[{self._random_pid()}]: kernel-core.service: Main process exited, "
+                    f"code=exited, status=1/FAILURE",
+            lambda: f"kernel: [{random.uniform(10, 1000):.3f}] EXT4-fs error (device sda1): "
+                    f"ext4_lookup:{random.randint(1000, 2000)}: inode #{random.randint(1, 100)}",
+            lambda: f"iptables: BLOCK: SRC={self._random_ip()} DST=192.168.1.100 "
+                    f"PROTO=TCP SPT={self._random_port()} DPT={self._random_port()}",
+            lambda: f"firewalld[{self._random_pid()}]: [ALERT] Possible DDoS attack "
+                    f"detected from {self._random_ip()}",
+        ]
+        return random.choice(templates)()
+
+    def _generate_not_important_log(self) -> str:
+        """Generate a single not important log (Label 0)."""
+        templates = [
+            lambda: f"Accepted password for root from {self._random_ip()} "
+                    f"port {self._random_port()} ssh2",
+            lambda: f"Connection closed by authenticating user root {self._random_ip()} [preauth]",
+            lambda: f"systemd[{self._random_pid()}]: Starting Periodic Command Scheduler...",
+            lambda: f"systemd[{self._random_pid()}]: Started Periodic Command Scheduler.",
+            lambda: f"CRON[{self._random_pid()}]: (root) CMD "
+                    f"( /usr/bin/find /tmp -mtime +{random.randint(1, 14)} -delete)",
+            lambda: f"iptables: IN=eth0 OUT= MAC=... SRC={self._random_ip()} "
+                    f"DST=192.168.1.255 PROTO=UDP SPT={self._random_port()} "
+                    f"DPT={self._random_port()}",
+            lambda: f"NetworkManager[{self._random_pid()}]: <info> "
+                    f"[{time.time():.3f}] connectivity: check: SUCCESS",
+            lambda: f"avahi-daemon[{self._random_pid()}]: Withdrawing address record "
+                    f"for {self._random_ip()} on eth0.",
+        ]
+        return random.choice(templates)()
 
     def generate_sample(self) -> dict:
         """
@@ -62,12 +90,17 @@ class LogGenerator:
             dict: A dictionary containing 'text' and 'label'.
         """
         # 10% chance of being important (1), 90% chance of not important (0)
+        timestamp = self._random_timestamp()
         if random.random() < 0.1:
-            log_text, label = random.choice(self.important_logs)
+            log_body = self._generate_important_log()
+            label = 1
         else:
-            log_text, label = random.choice(self.not_important_logs)
+            log_body = self._generate_not_important_log()
+            label = 0
 
-        return {"text": log_text, "label": label}
+        # Prepend timestamp to make it look like a syslog line
+        full_log = f"{timestamp} my-server {log_body}"
+        return {"text": full_log, "label": label}
 
     def generate_dataset(self, num_samples: int) -> list:
         """
