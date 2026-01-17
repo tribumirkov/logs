@@ -13,7 +13,10 @@ class Embedder:
     Handles generation of text embeddings.
     """
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, model_name: str):
+
         """
         Initialize the embedder with a specific model.
 
@@ -33,6 +36,6 @@ class Embedder:
         Returns:
             list: A list of embeddings (each embedding is a list of floats).
         """
-        embeddings = self.model.encode(texts)
+        embeddings = self.model.encode(texts, show_progress_bar=True)
         # Convert numpy arrays to lists for JSON serialization
         return embeddings.tolist()
