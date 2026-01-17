@@ -6,14 +6,18 @@ import json
 import os
 from src.config import load_config
 from src.generator import LogGenerator
+from src.embedder import Embedder
 
 
-def run_data_generation(config: dict):
+def run_data_generation(config: dict) -> str:
     """
     Generate synthetic log data based on the configuration.
 
     Args:
         config (dict): The configuration dictionary.
+
+    Returns:
+        str: The path to the generated JSON file.
     """
     print("Starting data generation...")
     data_cfg = config['data']
@@ -27,6 +31,33 @@ def run_data_generation(config: dict):
         json.dump(dataset, f, indent=2)
 
     print(f"Generated {len(dataset)} samples and saved to {output_path}")
+    return output_path
+
+
+def run_embedding_generation(config: dict, input_path: str):
+    """
+    Convert logs to embeddings and update the data file.
+
+    Args:
+        config (dict): The configuration dictionary.
+        input_path (str): The path to the generated logs JSON.
+    """
+    print("Starting embedding generation...")
+    with open(input_path, 'r', encoding='utf-8') as f:
+        dataset = json.load(f)
+
+    embedder = Embedder(config['embedding_model'])
+    texts = [sample['text'] for sample in dataset]
+    embeddings = embedder.generate_embeddings(texts)
+
+    for i, sample in enumerate(dataset):
+        sample['embedding'] = embeddings[i]
+
+    output_path = input_path.replace(".json", "_with_embeddings.json")
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(dataset, f, indent=2)
+
+    print(f"Added embeddings to {len(dataset)} samples and saved to {output_path}")
 
 
 def main():
@@ -39,7 +70,8 @@ def main():
         return
 
     config = load_config(config_path)
-    run_data_generation(config)
+    logs_path = run_data_generation(config)
+    run_embedding_generation(config, logs_path)
 
 
 if __name__ == "__main__":
