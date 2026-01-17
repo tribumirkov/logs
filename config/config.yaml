@@ -1,0 +1,13 @@
+embedding_model: "Qwen/Qwen3-Embedding-0.6B"
+
+data:
+  num_samples: 1000
+  output_path: "data/logs.json"
+  random_seed: 42
+
+classifiers:
+  - "logistic_regression"
+  - "svm"
+
+report:
+  output_path: "output/report.pdf"
