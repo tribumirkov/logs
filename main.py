@@ -8,6 +8,7 @@ from src.config import load_config
 from src.embedder import Embedder
 from src.trainer import Trainer
 from src.data_loader import load_bgl_data
+from src.reporter import Reporter
 
 
 def run_embedding_generation(config: dict, dataset: list) -> str:
@@ -63,11 +64,23 @@ def run_training(config: dict, data_path: str) -> dict:
     for name, metrics in results.items():
         print(f"\nResults for {name}:")
         print(f"  Accuracy:  {metrics['accuracy']:.4f}")
-        print(f"  Precision: {metrics['precision']:.4f}")
-        print(f"  Recall:    {metrics['recall']:.4f}")
-        print(f"  F1-Score:  {metrics['f1_score']:.4f}")
+        print(f"  Macro Precision: {metrics['macro_precision']:.4f}")
+        print(f"  Macro Recall:    {metrics['macro_recall']:.4f}")
+        print(f"  Macro F1-Score:  {metrics['macro_f1_score']:.4f}")
 
     return results
+
+def run_reporting(config: dict, results: dict):
+    """
+    Generate the PDF report.
+
+    Args:
+        config (dict): The configuration dictionary.
+        results (dict): The evaluation results.
+    """
+    print("Generating report...")
+    reporter = Reporter(config['report']['output_path'])
+    reporter.generate_report(results)
 
 def main():
     """
@@ -92,9 +105,10 @@ def main():
         print("Error: No data loaded.")
         return
 
-    # Pipeline: Embed -> Train
+    # Pipeline: Embed -> Train -> Report
     embedded_data_path = run_embedding_generation(config, dataset)
-    run_training(config, embedded_data_path)
+    results = run_training(config, embedded_data_path)
+    run_reporting(config, results)
 
 
 if __name__ == "__main__":
