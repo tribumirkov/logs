@@ -29,7 +29,7 @@
 
 ## Phase 3: Embedding Pipeline
 
-- [ ] Task: Implement Embedding Generator
+- [x] Task: Implement Embedding Generator 9a2fc4c
     - [ ] Create `src/embedder.py`.
     - [ ] Implement model loading using `sentence-transformers` (compatible with Qwen).
     - [ ] Implement batch processing to convert log text to embeddings.
