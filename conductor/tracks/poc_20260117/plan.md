@@ -47,7 +47,7 @@
     - [ ] Implement data loading and train/test split.
     - [ ] Implement `train_logistic_regression` and `train_svm`.
 
-- [ ] Task: Implement Evaluation Metrics
+- [x] Task: Implement Evaluation Metrics 59e8a70
     - [ ] Add metric calculation (Accuracy, Precision, Recall, F1).
     - [ ] Generate confusion matrices and ROC curve data.
     - [ ] run pylint.
