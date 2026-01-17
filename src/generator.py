@@ -50,16 +50,23 @@ class LogGenerator:
             ("avahi-daemon[234]: Withdrawing address record for 192.168.1.10 on eth0.", 0),
         ]
 
-        self.all_log_pools = self.auth_logs + self.system_logs + self.network_logs
+        all_logs = self.auth_logs + self.system_logs + self.network_logs
+        self.important_logs = [log for log in all_logs if log[1] == 1]
+        self.not_important_logs = [log for log in all_logs if log[1] == 0]
 
     def generate_sample(self) -> dict:
         """
-        Generate a single log sample.
+        Generate a single log sample with a roughly 10/90 split for importance.
 
         Returns:
             dict: A dictionary containing 'text' and 'label'.
         """
-        log_text, label = random.choice(self.all_log_pools)
+        # 10% chance of being important (1), 90% chance of not important (0)
+        if random.random() < 0.1:
+            log_text, label = random.choice(self.important_logs)
+        else:
+            log_text, label = random.choice(self.not_important_logs)
+
         return {"text": log_text, "label": label}
 
     def generate_dataset(self, num_samples: int) -> list:
