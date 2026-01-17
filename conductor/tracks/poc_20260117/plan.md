@@ -7,7 +7,7 @@
     - [ ] Initialize `uv` project and add dependencies: `pyyaml`, `pandas`, `numpy`, `scikit-learn`, `sentence-transformers`, `torch`, `matplotlib`, `seaborn`, `fpdf`, `pylint`.
     - [ ] Create initial `config.yaml` with default settings (Model: `Qwen/Qwen3-Embedding-0.6B`).
 
-- [ ] Task: Implement Configuration Loader
+- [x] Task: Implement Configuration Loader a723997
     - [ ] Create `src/config.py` to load and validate `config.yaml`.
     - [ ] Implement strict PEP 8 linting check.
 
