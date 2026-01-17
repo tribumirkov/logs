@@ -2,7 +2,7 @@
 
 ## Phase 1: Project Setup & Configuration
 
-- [ ] Task: Initialize project structure and environment
+- [x] Task: Initialize project structure and environment 279f495
     - [ ] Create project directories (`src`, `config`, `data`, `output`).
     - [ ] Initialize `uv` project and add dependencies: `pyyaml`, `pandas`, `numpy`, `scikit-learn`, `sentence-transformers`, `torch`, `matplotlib`, `seaborn`, `fpdf`, `pylint`.
     - [ ] Create initial `config.yaml` with default settings (Model: `Qwen/Qwen3-Embedding-0.6B`).
