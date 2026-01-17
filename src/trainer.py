@@ -96,6 +96,8 @@ class Trainer:
                 },
                 'y_test': self.y_test.tolist(),
                 'y_pred': y_pred.tolist(),
+                # Return full probability matrix for multi-class ROC
+                'y_score': model.predict_proba(self.x_test).tolist(),
                 'classes': self.classes.tolist()
             }
         return results
