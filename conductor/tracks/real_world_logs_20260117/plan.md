@@ -7,7 +7,7 @@
     - [ ] Remove `generator.py` imports and calls from `main.py`.
     - [ ] run pylint.
 
-- [ ] Task: Update Configuration for External Data
+- [x] Task: Update Configuration for External Data 7023a80
     - [ ] Update `config/config.yaml` to include `dataset_url` and `max_lines`.
     - [ ] Remove synthetic generation parameters from `config/config.yaml`.
     - [ ] Update `src/config.py` to validate new fields if necessary.
