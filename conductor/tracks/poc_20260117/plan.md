@@ -47,7 +47,11 @@
     - [ ] Implement data loading and train/test split.
     - [ ] Implement `train_logistic_regression` and `train_svm`.
 
-- [x] Task: Implement Evaluation Metrics 59e8a70
+- [x] Task: Refactor Log Generator for Dynamic Data 6b65361
+    - [ ] Update `src/generator.py` to use templates with random IPs, PIDs, and Timestamps.
+    - [ ] run pylint.
+
+- [ ] Task: Implement Evaluation Metrics
     - [ ] Add metric calculation (Accuracy, Precision, Recall, F1).
     - [ ] Generate confusion matrices and ROC curve data.
     - [ ] run pylint.
