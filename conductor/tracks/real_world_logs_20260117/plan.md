@@ -17,7 +17,7 @@
 
 ## Phase 2: Data Retrieval & Parsing
 
-- [ ] Task: Implement Dataset Downloader
+- [x] Task: Implement Dataset Downloader a1b4e08
     - [ ] Create `src/downloader.py`.
     - [ ] Implement logic to download BGL dataset if `data/BGL.log` is missing.
     - [ ] run pylint.
