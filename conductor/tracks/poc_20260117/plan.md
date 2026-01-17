@@ -1,6 +1,6 @@
 # Implementation Plan - Track: poc_20260117
 
-## Phase 1: Project Setup & Configuration
+## Phase 1: Project Setup & Configuration [checkpoint: 0130843]
 
 - [x] Task: Initialize project structure and environment 279f495
     - [ ] Create project directories (`src`, `config`, `data`, `output`).
