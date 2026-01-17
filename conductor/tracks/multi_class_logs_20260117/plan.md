@@ -6,7 +6,7 @@
     - [ ] Modify `src/data_loader.py` to return the original label string (or map `-` to `NORMAL`).
     - [ ] run pylint.
 
-- [ ] Task: Update Configuration
+- [x] Task: Update Configuration 99312bc
     - [ ] Verify `config/config.yaml` is still appropriate for the new multi-class task (e.g., check `max_lines` to ensure all categories are represented).
     - [ ] run pylint.
 
