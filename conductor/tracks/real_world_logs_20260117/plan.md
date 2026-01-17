@@ -33,7 +33,7 @@
 
 ## Phase 3: Pipeline Integration & Verification
 
-- [ ] Task: Integrate BGL Loader into Main Pipeline
+- [x] Task: Integrate BGL Loader into Main Pipeline 1dfa9e6
     - [ ] Update `main.py` to orchestrate: Download -> Parse -> Embed -> Train -> Report.
     - [ ] Ensure the parsed BGL data flows correctly into the existing `Embedder` and `Trainer`.
     - [ ] run pylint.
