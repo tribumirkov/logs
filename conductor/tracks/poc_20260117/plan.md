@@ -27,7 +27,7 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Synthetic Data Generation' (Protocol in workflow.md)
 
-## Phase 3: Embedding Pipeline
+## Phase 3: Embedding Pipeline [checkpoint: f2f9c79]
 
 - [x] Task: Implement Embedding Generator 9a2fc4c
     - [ ] Create `src/embedder.py`.
