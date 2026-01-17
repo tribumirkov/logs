@@ -1,6 +1,6 @@
 # Implementation Plan - Track: multi_class_logs_20260117
 
-## Phase 1: Data Loader & Configuration Updates
+## Phase 1: Data Loader & Configuration Updates [checkpoint: e8e27b6]
 
 - [x] Task: Update BGL Parser for Multi-Class Labels 81a74cd
     - [ ] Modify `src/data_loader.py` to return the original label string (or map `-` to `NORMAL`).
