@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Build the core sysadmin log classifier POC**
+- [~] **Track: Build the core sysadmin log classifier POC**
   *Link: [./tracks/poc_20260117/](./tracks/poc_20260117/)*
