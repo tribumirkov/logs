@@ -34,7 +34,7 @@
     - [ ] Implement model loading using `sentence-transformers` (compatible with Qwen).
     - [ ] Implement batch processing to convert log text to embeddings.
 
-- [ ] Task: Integrate Embedding with Data Pipeline
+- [x] Task: Integrate Embedding with Data Pipeline 81c37ae
     - [ ] Update pipeline to read generated JSON, add embeddings, and save to new JSON file.
     - [ ] run pylint.
 
