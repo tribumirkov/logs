@@ -13,7 +13,7 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Project Setup & Configuration' (Protocol in workflow.md)
 
-## Phase 2: Synthetic Data Generation
+## Phase 2: Synthetic Data Generation [checkpoint: ede402b]
 
 - [x] Task: Implement Log Generators e33b1e5
     - [ ] Create `src/generator.py`.
