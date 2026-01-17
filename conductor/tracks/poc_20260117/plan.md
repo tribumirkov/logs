@@ -20,7 +20,7 @@
     - [ ] Implement functions to generate Authentication, System, and Network logs.
     - [ ] Implement logic to assign labels (1/0) based on severity rules.
 
-- [ ] Task: Implement Data Generation CLI
+- [x] Task: Implement Data Generation CLI 1951697
     - [ ] Add main execution logic to generate `num_samples` and save to JSON.
     - [ ] Ensure deterministic output using random seed.
     - [ ] run pylint.
