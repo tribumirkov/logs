@@ -31,7 +31,7 @@
     - [ ] Modify `src/reporter.py` to handle N categories in confusion matrices.
     - [ ] Implement the detailed metrics table in the PDF output.
 
-- [ ] Task: Update Main Pipeline
+- [x] Task: Update Main Pipeline 07b5a73
     - [ ] Update `main.py` to handle the transition of string labels through the pipeline.
     - [ ] run pylint.
 
