@@ -15,7 +15,7 @@
 
 ## Phase 2: Synthetic Data Generation
 
-- [ ] Task: Implement Log Generators
+- [x] Task: Implement Log Generators e33b1e5
     - [ ] Create `src/generator.py`.
     - [ ] Implement functions to generate Authentication, System, and Network logs.
     - [ ] Implement logic to assign labels (1/0) based on severity rules.
