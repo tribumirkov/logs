@@ -27,7 +27,7 @@
 
 ## Phase 3: Reporting & Final Integration
 
-- [ ] Task: Update PDF Reporter for Multi-Class
+- [x] Task: Update PDF Reporter for Multi-Class 5ef9834
     - [ ] Modify `src/reporter.py` to handle N categories in confusion matrices.
     - [ ] Implement the detailed metrics table in the PDF output.
 
