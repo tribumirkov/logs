@@ -45,14 +45,15 @@ class Reporter:
 
     def _add_plot(self, title: str, plot_func, *args, **kwargs):
         """Helper to add a matplotlib plot to the PDF."""
-        plt.figure(figsize=(10, 6))
-        plot_func(*args, **kwargs)
-        plt.title(title)
+        plt.close('all')
+        fig, ax = plt.subplots(figsize=(10, 6))
+        plot_func(ax, *args, **kwargs)
+        ax.set_title(title)
 
         # Save plot to temporary file
         temp_img = "temp_plot.png"
-        plt.savefig(temp_img, bbox_inches='tight')
-        plt.close()
+        fig.savefig(temp_img, bbox_inches='tight')
+        plt.close(fig)
 
         # Add to PDF
         self.pdf.set_font('Arial', 'B', 12)
@@ -63,13 +64,13 @@ class Reporter:
         if os.path.exists(temp_img):
             os.remove(temp_img)
 
-    def _plot_confusion_matrix(self, y_true, y_pred, classes):
+    def _plot_confusion_matrix(self, ax, y_true, y_pred, classes):
         """Plots the confusion matrix."""
         cm = confusion_matrix(y_true, y_pred)
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-                    xticklabels=classes, yticklabels=classes)
-        plt.xlabel('Predicted')
-        plt.ylabel('True')
+                    xticklabels=classes, yticklabels=classes, ax=ax)
+        ax.set_xlabel('Predicted')
+        ax.set_ylabel('True')
 
     def generate_report(self, results: dict):
         """
@@ -78,7 +79,12 @@ class Reporter:
         Args:
             results (dict): The dictionary returned by Trainer.evaluate().
         """
+        first_model = True
         for model_name, metrics in results.items():
+            if not first_model:
+                self.pdf.add_page()
+            first_model = False
+
             self.pdf.set_font('Arial', 'B', 14)
             self.pdf.cell(0, 10, f"Model: {model_name.replace('_', ' ').title()}", 0, 1)
             self.pdf.ln(2)
@@ -117,17 +123,11 @@ class Reporter:
             y_pred = metrics['y_pred']
             classes = metrics['classes']
 
-            # Map indices back to class names for plotting if needed,
-            # but confusion_matrix takes y_true/y_pred as is.
-            # We just need labels for the axis.
-
             self._add_plot(
                 f"Confusion Matrix ({model_name})",
                 self._plot_confusion_matrix,
                 y_test, y_pred, classes
             )
-
-            self.pdf.add_page()
 
 
         # Save PDF

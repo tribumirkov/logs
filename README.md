@@ -6,7 +6,7 @@ This project is a Proof of Concept (POC) for automatically classifying system lo
 
 - **Log Parsing**: Specialized parser for the BGL log format.
 - **Stratified Subsampling**: Configurable sampling to balance NORMAL and ANOMALY classes.
-- **Embedding Generation**: Uses `sentence-transformers` (specifically Qwen models) to convert log text into high-dimensional vectors.
+- **Embedding Generation**: Uses `sentence-transformers` (specifically Qwen models) to convert log text into high-dimensional vectors. Embeddings are cached and reused on subsequent runs.
 - **Machine Learning Classifiers**: Supports Logistic Regression and SVM.
 - **Automated Reporting**: Generates a PDF report with accuracy metrics and confusion matrices.
 - **Config-Driven**: All parameters (dataset paths, sampling ratios, model choices) are managed via `config/config.yaml`.
@@ -59,8 +59,16 @@ Execute the main script to parse data, generate embeddings, train models, and cr
 uv run main.py
 ```
 
+**Note**: The pipeline automatically skips embedding generation if embeddings already exist (stored in `data/output_with_embeddings.json`). To regenerate embeddings, delete this file before running.
+
 ### 4. View Results
 The generated report will be saved to `output/report.pdf` (or as configured).
+
+### 5. Explore Embeddings (Optional)
+After embeddings have been generated, you can explore the data interactively by running the Jupyter notebook:
+```bash
+uv run jupyter notebook data_exploration.ipynb
+```
 
 ## Development
 

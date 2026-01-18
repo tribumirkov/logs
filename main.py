@@ -12,6 +12,19 @@ from src.data_loader import load_bgl_data
 from src.reporter import Reporter
 
 
+def get_embeddings_path(config: dict) -> str:
+    """
+    Get the path to the embeddings file.
+
+    Args:
+        config (dict): The configuration dictionary.
+
+    Returns:
+        str: The path to the JSON file with embeddings.
+    """
+    return config['data']['output_path'].replace(".json", "_with_embeddings.json")
+
+
 def run_embedding_generation(config: dict, dataset: list) -> str:
     """
     Convert logs to embeddings and save to JSON.
@@ -23,6 +36,12 @@ def run_embedding_generation(config: dict, dataset: list) -> str:
     Returns:
         str: The path to the JSON file with embeddings.
     """
+    output_path = get_embeddings_path(config)
+
+    if os.path.exists(output_path):
+        print(f"Embeddings already exist at {output_path}, skipping generation.")
+        return output_path
+
     print("Starting embedding generation...")
     embedder = Embedder(config['embedding_model'])
     texts = [sample['text'] for sample in dataset]
@@ -31,7 +50,6 @@ def run_embedding_generation(config: dict, dataset: list) -> str:
     for i, sample in enumerate(dataset):
         sample['embedding'] = embeddings[i]
 
-    output_path = config['data']['output_path'].replace(".json", "_with_embeddings.json")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     with open(output_path, 'w', encoding='utf-8') as f:
