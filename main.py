@@ -2,14 +2,20 @@
 Main entry point for the sysadmin log classifier POC.
 """
 
+from __future__ import annotations
+
 import json
 import os
+from typing import TYPE_CHECKING
+
 from src.config import load_config
 from src.downloader import download_bgl
-from src.embedder import Embedder
-from src.trainer import Trainer
 from src.data_loader import load_bgl_data
-from src.reporter import Reporter
+
+if TYPE_CHECKING:
+    from src.embedder import Embedder
+    from src.trainer import Trainer
+    from src.reporter import Reporter
 
 
 def get_embeddings_path(config: dict) -> str:
@@ -36,6 +42,8 @@ def run_embedding_generation(config: dict, dataset: list) -> str:
     Returns:
         str: The path to the JSON file with embeddings.
     """
+    from src.embedder import Embedder
+
     output_path = get_embeddings_path(config)
 
     if os.path.exists(output_path):
@@ -69,6 +77,8 @@ def run_training(config: dict, data_path: str) -> dict:
     Returns:
         dict: Evaluation results.
     """
+    from src.trainer import Trainer
+
     print("Starting model training...")
     with open(data_path, 'r', encoding='utf-8') as f:
         dataset = json.load(f)
@@ -97,6 +107,8 @@ def run_reporting(config: dict, results: dict):
         config (dict): The configuration dictionary.
         results (dict): The evaluation results.
     """
+    from src.reporter import Reporter
+
     print("Generating report...")
     reporter = Reporter(config['report']['output_path'])
     reporter.generate_report(results)
