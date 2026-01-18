@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
 
@@ -9,12 +9,7 @@ __pycache__/
 .python-version
 
 # Project specific
-data/*
-!data/.gitkeep
-output/*
-!output/.gitkeep
-*.json
-temp_plot.png
+logs_with_embeddings.json
 
 # OS-specific
 .DS_Store
@@ -22,3 +17,6 @@ Thumbs.db
 
 # uv
 uv.lock
+
+.claude
+conductor
