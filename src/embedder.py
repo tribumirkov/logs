@@ -6,6 +6,7 @@ pre-trained model from Sentence Transformers.
 """
 
 from sentence_transformers import SentenceTransformer
+from tqdm import tqdm
 
 
 class Embedder:
@@ -28,7 +29,7 @@ class Embedder:
 
     def generate_embeddings(self, texts: list) -> list:
         """
-        Generate embeddings for a list of texts.
+        Generate embeddings for a list of texts one by one.
 
         Args:
             texts (list): A list of strings to embed.
@@ -36,6 +37,8 @@ class Embedder:
         Returns:
             list: A list of embeddings (each embedding is a list of floats).
         """
-        embeddings = self.model.encode(texts, show_progress_bar=True)
-        # Convert numpy arrays to lists for JSON serialization
-        return embeddings.tolist()
+        embeddings = []
+        for text in tqdm(texts, desc="Generating embeddings"):
+            embedding = self.model.encode(text, show_progress_bar=False)
+            embeddings.append(embedding.tolist())
+        return embeddings

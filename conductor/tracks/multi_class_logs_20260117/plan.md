@@ -31,8 +31,12 @@
     - [ ] Modify `src/reporter.py` to handle N categories in confusion matrices.
     - [ ] Implement the detailed metrics table in the PDF output.
 
-- [x] Task: Update Main Pipeline 07b5a73
+- [ ] Task: Update Main Pipeline
     - [ ] Update `main.py` to handle the transition of string labels through the pipeline.
+    - [ ] run pylint.
+
+- [x] Task: Enable Embedder Progress Bar 748715d
+    - [ ] Update `src/embedder.py` to use `show_progress_bar=True`.
     - [ ] run pylint.
 
 - [ ] Task: Conductor - User Manual Verification 'Reporting & Final Integration' (Protocol in workflow.md)

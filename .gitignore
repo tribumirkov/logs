@@ -1,8 +1,24 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Environments
 .venv/
-data/
-output/
+.env
 .python-version
+
+# Project specific
+data/*
+!data/.gitkeep
+output/*
+!output/.gitkeep
+*.json
+temp_plot.png
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# uv
 uv.lock

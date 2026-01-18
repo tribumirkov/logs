@@ -1,10 +1,14 @@
 embedding_model: "Qwen/Qwen3-Embedding-0.6B"
 
 dataset_url: "https://zenodo.org/record/3227177/files/BGL.tar.gz"
-# Increased to 20000 to ensure representation of multiple log categories (NORMAL, FATAL, etc.)
-max_lines: 20000
+
+sampling:
+  total_samples: 1000
+  normal_ratio: 0.9
+  seed: 42
 
 data:
+  log_path: "data/BGL.log"
   output_path: "data/logs.json"
 
 classifiers:

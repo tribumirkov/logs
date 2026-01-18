@@ -98,8 +98,13 @@ def main():
     # download_bgl(config['dataset_url'])
 
     # Data Parsing
-    log_file = "data/BGL.log"
-    dataset = load_bgl_data(log_file, max_lines=config['max_lines'])
+    log_file = config['data']['log_path']
+    dataset = load_bgl_data(
+        log_file,
+        total_samples=config['sampling']['total_samples'],
+        normal_ratio=config['sampling']['normal_ratio'],
+        seed=config['sampling']['seed']
+    )
 
     if not dataset:
         print("Error: No data loaded.")
