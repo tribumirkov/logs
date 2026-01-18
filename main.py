@@ -5,6 +5,7 @@ Main entry point for the sysadmin log classifier POC.
 import json
 import os
 from src.config import load_config
+from src.downloader import download_bgl
 from src.embedder import Embedder
 from src.trainer import Trainer
 from src.data_loader import load_bgl_data
@@ -93,12 +94,12 @@ def main():
 
     config = load_config(config_path)
 
-    # Dataset Retrieval (Skipped as requested)
-    # from src.downloader import download_bgl
-    # download_bgl(config['dataset_url'])
-
-    # Data Parsing
+    # Step 1: Download dataset if not present
     log_file = config['data']['log_path']
+    data_dir = os.path.dirname(log_file)
+    download_bgl(config['dataset_url'], data_dir)
+
+    # Step 2: Parse log data
     dataset = load_bgl_data(
         log_file,
         total_samples=config['sampling']['total_samples'],
@@ -110,9 +111,13 @@ def main():
         print("Error: No data loaded.")
         return
 
-    # Pipeline: Embed -> Train -> Report
+    # Step 3: Generate embeddings
     embedded_data_path = run_embedding_generation(config, dataset)
+
+    # Step 4: Train classifiers
     results = run_training(config, embedded_data_path)
+
+    # Step 5: Generate report
     run_reporting(config, results)
 
 

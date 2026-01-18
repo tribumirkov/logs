@@ -10,6 +10,7 @@ __pycache__
 
 # Project specific
 logs_with_embeddings.json
+data/BGL.log
 
 # OS-specific
 .DS_Store
